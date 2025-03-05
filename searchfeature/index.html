@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="normalize.css" media="screen">
+    <link rel="stylesheet" href="resets.css" media="screen">
+    <link rel="stylesheet" href="styles.css" media="screen">
+    <title>Online CV</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .page-content { padding: 20px; border: 1px solid black; }
+        .image-container { display: flex; align-items: center; justify-content: flex-start; margin: 20px 0; }
+        .image-container .image-section { text-align: center; margin-right: 20px; }
+        .image-container img { width: 150px; display: block; }
+        .image-container p { text-align: center; }
+        h1 { text-align: center; }
+    </style>
+</style>
+</style>
+<script>
+    alert("Welcome to my Online Portfolio");
+    const jsonURL = "https://glyzaaa.github.io/Application-Dev/subjectstaken/courses.json";
+
+    let coursesData = []; // Store data globally for filtering
+
+document.addEventListener("DOMContentLoaded", () => {
+    fetch(jsonURL)
+        .then(response => response.json())
+        .then(data => {
+            if (data.courses && Array.isArray(data.courses)) {
+                coursesData = data.courses; 
+                displayCourses(coursesData); 
+            } else {
+                console.error("Expected 'courses' array but got:", data);
+            }
+        })
+        .catch(error => console.error("Error fetching JSON:", error));
+
+    const searchBar = document.getElementById("search-bar");
+    searchBar.addEventListener("input", handleSearch);
+});
+
+function displayCourses(courses) {
+    const courseList = document.getElementById("course-list");
+    courseList.innerHTML = ''; // Clear old list
+    courses.forEach(course => {
+        let listItem = document.createElement("li");
+        listItem.innerHTML = `Year Level: ${course.year_level}<br>
+                              Semester: ${course.sem}<br>
+                              Course Code: ${course.code}<br>
+                              Course Descriptive: ${course.description}<br>
+                              Credit: ${course.credit}`;
+        courseList.appendChild(listItem);
+    });
+}
+
+function handleSearch() {
+    const query = document.getElementById("search-bar").value.toLowerCase();
+    const filteredCourses = coursesData.filter(course =>
+        course.code.toLowerCase().includes(query) ||
+        course.description.toLowerCase().includes(query) ||
+        course.year_level.toString().includes(query)
+    );
+    displayCourses(filteredCourses);
+}
+</script>
+</head>
+
+</head>
+<body>
+    <header>
+        <h2>This is My Portfolio</h2>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education"> Education</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#contact">Contac</a></li>
+        </ul>
+    </header>
+    
+    <div class="image-container">
+        <div class="image-section">
+            <img src="me.jpg" alt="Profile Image">
+            <p>3rd Year BSIT Student</p>
+        </div>
+    </div>
+    
+    <div class="page-content">
+        <p>This is My Basic Information,</p>
+        <h1>Hello! I am a Glyza Mae S. Apus</h1>
+        
+        <div id="about">I am 21 Years old, Born in January 03 2004</div>
+        <div id="education">I am Scholar at the University of Science and Technology of Southern Philippines</div>
+        <div id="skills">UI/UX Designer</div>
+        <div id="portfolio">I am division with id equal to portfolio</div>
+        <div id="contact">09361960828</div>
+    </div>
+
+    </div>        
+        <h2>Subjects Taken</h2>
+        <input type="text" id="search-bar" placeholder="Search courses...">
+        <ul id="course-list" class="course-list"></ul>
+    </div>
+    
+    <footer>
+        <p>All rights Reserved</p>
+    </footer>
+</body>
+</html>
